@@ -44,8 +44,6 @@ if(!$row) {
 	<title>Tabla de Notas</title>
 </head>
 <body>
-	<h1>Tabla de Registrar Notas</h1>
-
 <?php
 // Mostrar el formulario de notas
 echo "<h2>Ingresar Notas del colaborador: " . $row["nombre"] . "</h2>";
