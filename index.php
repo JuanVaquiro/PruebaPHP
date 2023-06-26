@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "proueba_tecnica";
+$dbname = "prouebatecnica";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -56,6 +56,7 @@ $conn->close();
     <input type="password" name="password" required>
     <br>
     <input type="submit" name="submit" value="Iniciar sesión">
+    <a class="ancor_registrarse" href="registrarse.php">Registrarse</a>
   </form>
 </body>
 </html>

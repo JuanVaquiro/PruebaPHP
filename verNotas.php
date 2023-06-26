@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "proueba_tecnica";
+$dbname = "prouebatecnica";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -38,12 +38,13 @@ $row = $result->fetch_assoc();
 	<title>Tabla de Notas</title>
 </head>
 <body>
-	<h1>Tabla de Notas</h1>
+	<h2>Tabla de Notas</h2>
 	<table>
 		<tr>
 			<th>#Num</th>
       <th>caracteristica</th>
 			<th>Nota</th>
+			<th>Comentario</th>
 			<th>Fecha</th>
 		</tr>
 		<?php
@@ -53,6 +54,7 @@ $row = $result->fetch_assoc();
 			echo "<td>" . $row["notaID"] . "</td>";
       echo "<td>" . $row["caracteristica"] . "</td>";
 			echo "<td>" . $row["nota"] . "</td>";
+			echo "<td>" . $row["comentario"] . "</td>";
 			echo "<td>" . $row["fecha_registro"] . "</td>";
 			echo "</tr>";
 		}

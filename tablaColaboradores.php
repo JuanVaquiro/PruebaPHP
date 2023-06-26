@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "proueba_tecnica";
+$dbname = "prouebatecnica";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -33,7 +33,15 @@ $result = $conn->query($sql);
 	<title>Tabla de Colaboradores</title>
 </head>
 <body>
-	<h1>Tabla de Colaboradores</h1>
+  
+  <div class="betewen">
+    <h2>Tabla de Colaboradores</h2>
+    <div>
+      <a href="SST.php" class="btn_praimary">MODULO DE SST</a>
+      <a href="cultura_fisica.php" class="btn_praimary">MODULO DE CULTURA FISICA</a>    
+    </div>
+  </div>
+
 <table>
   <tr>
     <th>Colaborador</th>
@@ -50,7 +58,7 @@ $result = $conn->query($sql);
           <td><?php echo $row['email']; ?></td>
           <td><?php echo $row['cargo']; ?></td>
           <td><a href="verNotas.php?colaborador_id=<?php echo $row['colaboradorID']?>">Notas</a></td>
-          <td><a href="ingresarNotas.php?colaborador_id=<?php echo $row['colaboradorID']?>">Ingresar Notas</a></td>
+          <td><a href="ingresarNotas.php?colaborador_ID=<?php echo $row['colaboradorID']?>">Ingresar Notas</a></td>
         </tr>
         <?php 
       } 

@@ -1,77 +1,65 @@
 <?php
-// Conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "proueba_tecnica";
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los valores del formulario
+    $colaboradorID = $_GET["colaborador_ID"];
+    $caracteristica = $_POST["caracteristica"];
+    $nota = $_POST["nota"];
+    $comentario = $_POST["comentario"];
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Aquí puedes realizar las validaciones y manipulaciones necesarias antes de guardar la nota en la base de datos
 
-// Verificar la conexión
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+    // Guardar la nota en la base de datos
+    // Realiza la conexión a la base de datos y ejecuta la consulta para guardar la nota
 
-// Comprobar si el empresario ha iniciado sesión
-session_start();
+    // Ejemplo de conexión a la base de datos
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "prouebatecnica";
 
-if(!isset($_SESSION["empresario"])) {
-  header("Location: index.php");
-  exit();
-}
+    // Crear la conexión
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Obtener el ID del colaborador a través de la variable GET
-if(isset($_GET["colaborador_id"])) {
-  $colaborador_id = $_GET["colaborador_id"];
-}
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
 
-// Obtener los datos del colaborador
-$sql = "SELECT * FROM colaboradores WHERE colaboradorID = '$colaborador_id'";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+    // Preparar la consulta SQL
+    $sql = "INSERT INTO notas (colaborador_ID, caracteristica, nota, comentario) VALUES ('$colaboradorID', '$caracteristica', '$nota', '$comentario')";
 
-// Comprobar si el colaborador existe
-if(!$row) {
-  echo "El colaborador no existe.";
-  exit();
+    // Ejecutar la consulta
+    if ($conn->query($sql) === TRUE) {
+        echo "La nota se ha registrado correctamente.";
+    } else {
+        echo "Error al registrar la nota: " . $conn->error;
+    }
+
+    // Cerrar la conexión
+    $conn->close();
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="estilos.css">
-	<title>Tabla de Notas</title>
+    <title>Registrar Nota</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-<?php
-// Mostrar el formulario de notas
-echo "<h2>Ingresar Notas del colaborador: " . $row["nombre"] . "</h2>";
-echo "<form action='guardar_notas.php' method='post'>";
-echo "<input type='hidden' name='colaborador_id' value='" . $colaborador_id . "'>";
-echo "<table>";
-echo "<tr><th>Característica</th><th>Nota</th><th>Comentario</th></tr>";
-echo "<tr>
-  <td><input type='text' name='caracteristica1' name='caracteristica1'></td>
-  <td><input type='number' step='0.1' name='nota1'></td>
-  <td><input type='text' name='comentario1'></td>
-  </tr>";
-echo "<tr>
-  <td><input type='text' name='caracteristica1' name='caracteristica1'></td>
-  <td><input type='number' step='0.1' name='nota2'></td>
-  <td><input type='text' name='comentario2'></td>
-  </tr>";
-echo "<tr>
-  <td><input type='text' name='caracteristica1' name='caracteristica1'></td>
-  <td><input type='number' step='0.1' name='nota3'></td>
-  <td><input type='text' name='comentario3'></td>
-  </tr>";
-echo "</table>";
-echo "<input type='submit' value='Guardar'>";
-echo "</form>";
+    <h2>Registrar Nota</h2>
+    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]."?colaborador_ID=".$_GET["colaborador_ID"]; ?>">
+        <label for="caracteristica">Característica:</label>
+        <input type="text" name="caracteristica" required><br>
 
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>
+        <label for="nota">Nota:</label>
+        <input type="number" name="nota" step="0.01" required><br>
+
+        <label for="comentario">Comentario:</label>
+        <textarea name="comentario" rows="4" required></textarea><br>
+
+        <input type="submit" value="Registrar Nota">
+    </form>
 </body>
 </html>
